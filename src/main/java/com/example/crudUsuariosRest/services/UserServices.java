@@ -12,8 +12,8 @@ public interface UserServices {
 
 	public List<Usuarios> getAll();
 
-	public Usuarios findId(Integer identificacion);
-
 	public Boolean remove(Integer identificacion);
+
+	public Usuarios findIdentificacion(Integer identificacion);
 
 }

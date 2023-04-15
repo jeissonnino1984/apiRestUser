@@ -4,11 +4,14 @@ import java.util.List;
 
 import javax.websocket.server.PathParam;
 
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +21,7 @@ import com.example.crudUsuariosRest.dto.UserDto;
 import com.example.crudUsuariosRest.entity.Usuarios;
 import com.example.crudUsuariosRest.services.UserServices;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -61,15 +65,25 @@ public class UserController {
 	}
 
 
-	@PostMapping("/findId")
-	public ResponseEntity<Object> findId(@RequestParam(name = "identificacion") Integer identificacion) {
-		Usuarios usuariosFind = userServices.findId(identificacion);
+	@GetMapping("/findId")
+	public ResponseEntity<Object> findId(@RequestParam Integer identificacion) {
+		Usuarios usuariosFind = userServices.findIdentificacion(identificacion);
 		if (usuariosFind != null) {
 			return ResponseEntity.ok(usuariosFind);
 		} else {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("no content");
 		}
 	}
+	
+	@PostMapping("/remove")
+	public ResponseEntity<Object> remove(@RequestParam(name = "identificacion") Integer identificacion) { 
+		if (userServices.remove(identificacion)) {
+			return ResponseEntity.ok("borrado");
+		} else {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("no content");
+		}
+	}
+	
 	
 	
 	

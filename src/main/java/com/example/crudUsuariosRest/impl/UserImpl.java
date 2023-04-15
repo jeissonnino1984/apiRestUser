@@ -35,11 +35,23 @@ public List<Usuarios> getAll() {
 }
 
 @Override
-public Usuarios findId(Integer identificacion) {	
+public Usuarios findIdentificacion(Integer identificacion) {	
 	Optional<Usuarios> us =  userRepository.findById(identificacion);
     if (us.isPresent()) 
 		return us.get();
 	return  null;
+}
+
+
+public Usuarios getUsuario(Integer identificacion) {
+	
+	Optional<Usuarios> us =  userRepository.findById(identificacion);
+	if (us.isPresent()) {
+		return us.get();
+	} else {
+        return null;
+	}
+	
 }
 
 @Override
@@ -51,6 +63,8 @@ public Boolean remove(Integer identificacion) {
     }
 	return false;
 }
+
+
 
 
 }
